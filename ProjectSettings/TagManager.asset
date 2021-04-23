@@ -6,6 +6,7 @@ TagManager:
   tags:
   - obstacule
   - point
+  - stop
   layers:
   - Default
   - TransparentFX

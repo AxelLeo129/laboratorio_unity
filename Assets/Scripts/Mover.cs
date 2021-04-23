@@ -5,43 +5,48 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
 
-    private int score = 0;
     private Rigidbody rb;
+    Instanciador manager;
+
     // Start is called before the first frame update
     void Start()
     {
         this.rb = GetComponent<Rigidbody>();
+        this.manager = GameObject.FindObjectOfType<Instanciador>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if(Time.timeScale == 1)
         {
-            transform.position += new Vector3(0.01f, 0, 0);
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.position += new Vector3(0, 0, -0.01f);
-        }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.position += new Vector3(0, 0, 0.01f);
-        }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.position += new Vector3(-0.01f, 0, 0);
-        }
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (this.rb && Mathf.Abs(this.rb.velocity.y) < 0.05f)
-                rb.AddForce(0, 3, 0, ForceMode.Impulse);
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.position += new Vector3(0.01f, 0, 0);
+            }
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.position += new Vector3(0, 0, -0.01f);
+            }
+            else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.position += new Vector3(0, 0, 0.01f);
+            }
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.position += new Vector3(-0.01f, 0, 0);
+            }
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (this.rb && Mathf.Abs(this.rb.velocity.y) < 0.05f)
+                    rb.AddForce(0, 3, 0, ForceMode.Impulse);
+            }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("obstacule") && this.score < 3)
+        if(collision.gameObject.CompareTag("obstacule") && this.manager.Score < 3)
             Destroy(gameObject);
     }
 
@@ -50,8 +55,7 @@ public class Mover : MonoBehaviour
         if (other.gameObject.CompareTag("point"))
         {
             Destroy(other.gameObject);
-            this.score++;
-            print(this.score);
+            this.manager.Score++;
         }
     }
 
