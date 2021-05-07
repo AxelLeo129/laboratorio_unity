@@ -8,6 +8,7 @@ public class Instanciador : MonoBehaviour
     [SerializeField] private Object player_prefab;
     [SerializeField] private Text score_text;
     [SerializeField] private GameObject pause_menu;
+    [SerializeField] private Slider slider;
 
     private bool is_paused = false;
     GameObject player;
@@ -55,6 +56,11 @@ public class Instanciador : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void modifyVolume()
+    {
+        GameObject.FindObjectOfType<Mover>().modifyVolume(this.slider.value);
     }
 
 }
